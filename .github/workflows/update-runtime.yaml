@@ -29,12 +29,12 @@ jobs:
           latest_version=$(echo $response | jq -r '.runtimeVersions | keys | sort_by(. | split(".") | map(tonumber)) | last')
 
           # Set the latest runtime version as an output
-          echo "::set-output name=latest_runtime::$latest_version"
+          echo "LATEST_RUNTIME=$latest_version" >> $GITHUB_ENV
 
       - name: Update Dockerfile with latest runtime version
         run: |
           # Get the latest runtime version from the previous step
-          latest_runtime=${{ steps.get_latest_runtime.outputs.latest_runtime }}
+            latest_runtime=$LATEST_RUNTIME
 
           # Update the Dockerfile with the latest runtime version
           sed -i "s/FROM quay.io\/astronomer\/astro-runtime:.*/FROM quay.io\/astronomer\/astro-runtime:$latest_runtime/" Dockerfile
