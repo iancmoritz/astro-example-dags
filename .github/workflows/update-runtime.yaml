@@ -34,7 +34,7 @@ jobs:
       - name: Update Dockerfile with latest runtime version
         run: |
           # Get the latest runtime version from the previous step
-            latest_runtime=${{ env.LATEST_RUNTIME }}
+            latest_runtime=$LATEST_RUNTIME
 
           # Update the Dockerfile with the latest runtime version
           sed -i "s/FROM quay.io\/astronomer\/astro-runtime:.*/FROM quay.io\/astronomer\/astro-runtime:$latest_runtime/" Dockerfile
@@ -42,4 +42,4 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update Astro Runtime to ${{ steps.get_latest_runtime.outputs.latest_runtime }}"
+          commit_message: "Update Astro Runtime to $LATEST_RUNTIME"
