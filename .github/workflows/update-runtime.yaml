@@ -9,7 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
 
@@ -24,6 +25,7 @@ jobs:
 
           # Set the latest runtime version as an output
           echo "::set-output name=latest_runtime::$latest_version"
+
       - name: Update Dockerfile with latest runtime version
         run: |
           # Get the latest runtime version from the previous step
@@ -31,5 +33,8 @@ jobs:
 
           # Update the Dockerfile with the latest runtime version
           sed -i "s/FROM quay.io\/astronomer\/astro-runtime:.*/FROM quay.io\/astronomer\/astro-runtime:$latest_runtime/" Dockerfile
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Update Astro Runtime to ${{ steps.get_latest_runtime.outputs.latest_runtime }}"
