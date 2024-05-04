@@ -1,12 +1,17 @@
-name: Astronomer CI - Update Astro Runtime Version
+name: Astronomer CI - Update Astro Runtime Version - Delete Me For Forks
 
 on:
   workflow_dispatch: # Manual trigger
   schedule:
     - cron: "0 16 * * *" # Once a day at noon ET
 
+env:
+  ENABLE_RUNTIME_AUTO_UPDATES: false
+
 jobs:
-  build:
+  update-runtime-version:
+    # Only run this job if the repository is the original example-dags repository
+    if: github.repository == 'astronomer/astro-example-dags' || github.repository == 'iancmoritz/astro-example-dags'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
