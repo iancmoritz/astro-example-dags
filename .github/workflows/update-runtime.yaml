@@ -42,4 +42,4 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Update Astro Runtime to $LATEST_RUNTIME"
+          commit_message: "Update Astro Runtime to ${{ ENV.LATEST_RUNTIME }}"
