@@ -34,7 +34,7 @@ jobs:
       - name: Update Dockerfile with latest runtime version
         run: |
           # Get the latest runtime version from the previous step
-            latest_runtime=$LATEST_RUNTIME
+            latest_runtime=${{ env.LATEST_RUNTIME }}
 
           # Update the Dockerfile with the latest runtime version
           sed -i "s/FROM quay.io\/astronomer\/astro-runtime:.*/FROM quay.io\/astronomer\/astro-runtime:$latest_runtime/" Dockerfile
